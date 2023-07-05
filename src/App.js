@@ -15,13 +15,17 @@ function App() {
   const [headingResult, setHeadingResult] = useState("");
   const [subheadingResult, setSubheadingResult] = useState("");
 
+  function generateCompanyName() {
+    return `Return a name for a cutting-edge startup. No quotes.`;
+  }
+
   async function handleButtonClick(event) {
     event.preventDefault();
 
     try {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: "generate a person's name",
+        prompt: generateCompanyName(),
         temperature: 0.5,
         max_tokens: 4000,
       });

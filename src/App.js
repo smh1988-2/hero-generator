@@ -1,24 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { Configuration, OpenAIApi } from "openai";
+import Hero from "./components/Hero";
+import Nav from "./components/Nav";
+
 
 function App() {
+  const configuration = new Configuration({
+    apiKey: process.env.REACT_APP_OPENAI_API_KEY,
+  });
+
+  const openai = new OpenAIApi(configuration);
+
+  const [companyName, setCompanyName] = useState("")
+  const [headingResult, setHeadingResult] = useState("");
+  const [subheadingResult, setSubheadingResult] = useState("");
+
+  async function handleButtonClick(event) {
+    event.preventDefault();
+
+    try {
+      const response = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: "generate a person's name",
+        temperature: 0.5,
+        max_tokens: 4000,
+      });
+
+      console.log("results:", response);
+
+      setCompanyName(response.data.choices[0].text);
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+    <main>
+    <Nav companyName={companyName} />
+    <Hero headingResult={headingResult} subheadingResult={subheadingResult} />
+
+    <div className="button-container">
+      <button className="generate-button" onClick={handleButtonClick}>Create a new company</button>
     </div>
+  </main>
   );
 }
 

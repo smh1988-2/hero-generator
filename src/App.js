@@ -15,6 +15,8 @@ function App() {
   const [subheadingResult, setSubheadingResult] = useState("");
   const [tone, setTone] = useState("");
 
+  const [loading, setLoading] = useState(false);
+
   function generateCompanyName() {
     return `Return a name for a ${tone} startup. No quotes.`;
   }
@@ -35,6 +37,8 @@ function App() {
   async function handleButtonClick(event) {
     event.preventDefault();
 
+    setLoading(true)
+
     try {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
@@ -54,7 +58,6 @@ function App() {
   }
 
   async function generateHeadlineDescription(name) {
-
     try {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
@@ -63,8 +66,10 @@ function App() {
         max_tokens: 4000,
       });
 
-      setHeadingResult(response.data.choices[0].text);
-      setSubheadingResult(response.data.choices[1].text)
+      setHeadingResult(response.data.choices[0].text.replace(/['"]+/g, ''));
+      setSubheadingResult(response.data.choices[1].text.replace(/['"]+/g, ''));
+      setLoading(false);
+
     } catch (error) {
       console.error(error);
       alert(error.message);
@@ -74,8 +79,8 @@ function App() {
   return (
 
     <main>
-      <Nav companyName={companyName} />
-      <Hero headingResult={headingResult} subheadingResult={subheadingResult} />
+      <Nav companyName={companyName} loading={loading} />
+      <Hero headingResult={headingResult} subheadingResult={subheadingResult} loading={loading} />
 
       <div className="button-container">
         <label for="tone">Choose a tone:</label>

@@ -1,20 +1,16 @@
 import React from 'react'
 
-function Nav({ companyName }) {
+function Nav({ companyName, loading }) {
     return (
-        <div className='nav-container'> 
-        
-        <nav>
-        <h1 className='company-wordmark'>{ companyName ? companyName : "Company Name" }</h1>
-           <div>
-           <a href="#">Home</a>
-            <a href="#">About</a>
-           </div>
-            
-            <button className="signup-button">Sign up</button>
+        <div className='nav-container'>
+            <nav>
+                { !loading ?
+                    <h1 className='company-wordmark'>{companyName ? companyName : "Company Name"}</h1>
+                    : null}
 
-        </nav></div>
-
+                <a href="https://www.linkedin.com/in/sean-hurley/" className="signup-button">Sign up</a>
+            </nav>
+        </div>
     )
 }
 

@@ -194,9 +194,25 @@ nav {
   line-height: 1.75rem;
 }
 
-.button-container {
+.select-container {
   text-align: center;
   margin-top: 48px;
+  display: flex;
+  gap: 8px;
+  flex-direction: column;
+  align-items: center;
+}
+
+select {
+  max-width: 50%;
+  padding: 5px;
+  font-family: Livvic;
+
+}
+
+.button-container {
+  text-align: center;
+  margin-top: 24px;
 }
 
 .generate-button {
@@ -222,6 +238,7 @@ nav {
     display: initial;
     font-family: Livvic;
     text-transform: lowercase;
+    text-decoration: none;
     font-weight: 700;
     padding: 8px 15px;
     background-color: #014E56;

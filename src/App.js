@@ -82,7 +82,7 @@ function App() {
       <Nav companyName={companyName} loading={loading} />
       <Hero headingResult={headingResult} subheadingResult={subheadingResult} loading={loading} />
 
-      <div className="button-container">
+      <div className="select-container">
         <label for="tone">Choose a tone:</label>
 
         <select name="tone" id="tone" onChange={handleToneChange}>

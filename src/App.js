@@ -19,6 +19,14 @@ function App() {
     return `Return a name for a cutting-edge startup. No quotes.`;
   }
 
+  function generateHeading(companyName) {
+    return `Return a short slogan for a cutting-edge startup called ${companyName}. No quotes.`;
+  }
+  
+  function generateSubheading(companyName) {
+    return `Return a short paragraph for a cutting-edge startup called ${companyName}.`;
+  }
+
   async function handleButtonClick(event) {
     event.preventDefault();
 
@@ -33,6 +41,25 @@ function App() {
       console.log("results:", response);
 
       setCompanyName(response.data.choices[0].text);
+      generateHeadlineDescription(response.data.choices[0].text)
+    } catch (error) {
+      console.error(error);
+      alert(error.message);
+    }
+  }
+
+  async function generateHeadlineDescription(name) {
+
+    try {
+      const response = await openai.createCompletion({
+        model: "text-davinci-003",
+        prompt: [generateHeading(name), generateSubheading(name)],
+        temperature: 0.5,
+        max_tokens: 4000,
+      });
+
+      setHeadingResult(response.data.choices[0].text);
+      setSubheadingResult(response.data.choices[1].text)
     } catch (error) {
       console.error(error);
       alert(error.message);

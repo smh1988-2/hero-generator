@@ -180,7 +180,7 @@ nav a {
 
 .hero {
     background-color: #014E56;
-    /* background-image: url(../../public/Group\ 7.svg); */
+    background-image: url(/public/Group\ 7.svg);
     background-repeat: no-repeat;
     background-position-x: 80%;
     background-position-y: 100%;
@@ -191,7 +191,7 @@ nav a {
     position: absolute;
     width: 102px;
     height: 231px;
-    /* background-image: url(../../public/Group\ 8.svg); */
+    background-image: url(/public/Group\ 8.svg);
     background-repeat: no-repeat;
     background-position-x: 0%;
     background-position-y: 15%;

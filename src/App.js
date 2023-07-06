@@ -14,6 +14,7 @@ function App() {
   const [headingResult, setHeadingResult] = useState("");
   const [subheadingResult, setSubheadingResult] = useState("");
   const [tone, setTone] = useState("");
+  const [bgColor, setBgColor] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -27,6 +28,10 @@ function App() {
 
   function generateSubheading(companyName) {
     return `Return a short ${tone} paragraph for a ${tone} startup called ${companyName}.`;
+  }
+
+  function generateBgColor() {
+    return `Return a CSS hex code for a color to be used on a startup's website`
   }
 
   function handleToneChange(event) {
@@ -46,28 +51,28 @@ function App() {
         temperature: 1.5,
         max_tokens: 4000,
       });
-
-      console.log("results:", response);
-
       setCompanyName(response.data.choices[0].text);
-      generateHeadlineDescription(response.data.choices[0].text)
+      generateHeadlineDescription(response.data.choices[0].text, tone)
     } catch (error) {
       console.error(error);
       alert(error.message);
     }
   }
 
-  async function generateHeadlineDescription(name) {
+  async function generateHeadlineDescription(name, tone) {
     try {
       const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: [generateHeading(name), generateSubheading(name)],
+        prompt: [generateHeading(name), generateSubheading(name), generateBgColor()],
         temperature: 1,
         max_tokens: 4000,
       });
 
+      console.log(response); 
+
       setHeadingResult(response.data.choices[0].text.replace(/['"]+/g, ''));
       setSubheadingResult(response.data.choices[1].text.replace(/['"]+/g, ''));
+      setBgColor(response.data.choices[2].text)
       setLoading(false);
 
     } catch (error) {
@@ -79,11 +84,11 @@ function App() {
   return (
 
     <main>
-      <Nav companyName={companyName} loading={loading} />
-      <Hero headingResult={headingResult} subheadingResult={subheadingResult} loading={loading} />
+      <Nav companyName={companyName} loading={loading} bgColor={bgColor}/>
+      <Hero headingResult={headingResult} subheadingResult={subheadingResult} loading={loading} bgColor={bgColor} />
 
       <div className="select-container">
-        <label for="tone">Choose a tone:</label>
+        <label htmlFor="tone">Choose a tone:</label>
 
         <select name="tone" id="tone" onChange={handleToneChange}>
           <option value="exciting">Exciting</option>

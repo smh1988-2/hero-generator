@@ -1,8 +1,8 @@
 import React from 'react'
 
-function Hero({ headingResult, subheadingResult, loading }) {
+function Hero({ headingResult, subheadingResult, loading, bgColor }) {
     return (
-        <section className="hero">
+        <section className="hero" style={{ backgroundColor: bgColor}}>
             <div className="hero-text-container">
                 { !loading ?
                     <>

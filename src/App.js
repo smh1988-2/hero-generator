@@ -95,6 +95,7 @@ function App() {
           <option value="innovative">Innovative</option>
           <option value="disruptive">Disruptive</option>
           <option value="satirical">Satirical</option>
+          <option value="wellness">Wellness</option>
         </select>
       </div>
 
